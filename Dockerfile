@@ -5,10 +5,10 @@ FROM python:3.6.4-slim
 WORKDIR /app
 
 # add the current directory to the container as /app
-COPY sourcecode/* /app
+COPY sourcecode /app
 
-# execute everyone's favorite pip command, pip install -r
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+# execute everyone's favorite pip command, pip install 
+RUN pip install --trusted-host pypi.python.org flask==1.0.2
 
 # unblock port 80 for the Flask app to run on
 EXPOSE 5000
