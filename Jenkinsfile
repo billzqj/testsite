@@ -41,6 +41,11 @@ pipeline {
 		}
 		
 		stage('publish to prod') {
+			when {
+				expression {
+					env.BRANCH_NAME == "master"
+				}
+			}
 			agent any
 			steps {
 				echo "docker run latest images."
