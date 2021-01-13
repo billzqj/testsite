@@ -33,12 +33,18 @@ pipeline {
 			}
 		}
 		
-		//stage('publish prod') {
-		//	agent any
-		//	steps {
-		//		sh 'docker ps -a | grep mywebsite  && docker rm -f mywebsite || echo "mywebsite is not exist!"'
-		//		sh 'docker run -d -p 80:5000 --name mywebsite --restart=always mywebsite:latest'
-		//	}
-		//}
+		stage('push to dockerhub') {
+			agent any
+			steps {
+				echo "docker push mywebsite:latest"
+			}
+		}
+		
+		stage('publish to prod') {
+			agent any
+			steps {
+				echo "docker run latest images."
+			}
+		}
 	}
 }
