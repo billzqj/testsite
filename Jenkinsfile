@@ -6,7 +6,6 @@ pipeline {
 			
 			steps {
 				git 'https://github.com/billzqj/testsite.git'
-				echo env.BRANCH_NAME
 			}
 		}
 		
@@ -43,7 +42,9 @@ pipeline {
 		
 		stage('publish to prod') {
 			when {
-				environment name: 'BRANCH_NAME', value: 'master'
+				expression {
+					env.BRANCH_NAME == 'master'
+				}
 			}
 			agent any
 			steps {
