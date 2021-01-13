@@ -6,6 +6,7 @@ pipeline {
 			
 			steps {
 				git 'https://github.com/billzqj/testsite.git'
+				sh 'echo ${BRANCH_NAME}'
 			}
 		}
 		
