@@ -19,6 +19,7 @@ pipeline {
 		
 		stage('deployment') {
 			agent any
+			
 			steps {
 				sh 'docker ps -a | grep mywebsite  && docker rm -f mywebsite || echo "mywebsite is not exist!"'
 				sh 'docker run -d -p 80:5000 --name mywebsite --restart=always mywebsite:latest'
@@ -27,6 +28,7 @@ pipeline {
 		
 		stage('autotest') {
 			agent any
+			
 			steps {
 				sh 'chmod +x autotest.sh'
 				sh './autotest.sh'
@@ -35,6 +37,7 @@ pipeline {
 		
 		stage('push to dockerhub') {
 			agent any
+			
 			steps {
 				echo "docker push mywebsite:latest"
 			}
@@ -42,13 +45,15 @@ pipeline {
 		
 		stage('publish to prod') {
 			when {
-				expression {
-					env.BRANCH_NAME == 'master'
-				}
-			}
+    				expression {
+    					env.GIT_BRANCH == "master"
+    				}
+		    	}
+			
 			agent any
+			
 			steps {
-				echo "docker run latest images."
+				echo "[ok] publish to prod envirmonent!"
 			}
 		}
 	}
